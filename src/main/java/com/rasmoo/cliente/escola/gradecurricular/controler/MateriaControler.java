@@ -21,24 +21,16 @@ public class MateriaControler {
 
     @GetMapping
     public ResponseEntity<List<MateriaEntity>> listarMaterias(){
-
-        return ResponseEntity.ok().body(materiaRepository.findAll());
+        return ResponseEntity.ok().body(this.materiaService.listar());
     }
     @GetMapping("/{id}")
     public ResponseEntity<MateriaEntity> buscarMateria(@PathVariable Long id){
-        return ResponseEntity.ok().body(this.materiaRepository.findById(id).get());
+        return ResponseEntity.ok().body(this.materiaService.buscarPorId(id));
     }
 
     @PostMapping
     public ResponseEntity<Boolean> cadastrarMateria(@RequestBody MateriaEntity materia){
-        try{
-            this.materiaRepository.save(materia);
-
-            return ResponseEntity.status(HttpStatus.OK).body(true);
-        }
-        catch (Exception e) {
-            return ResponseEntity.ok().body(false);
-        }
+        return ResponseEntity.ok().body(this.materiaService.cadastrar(materia));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deletarMateria(@PathVariable Long id){
