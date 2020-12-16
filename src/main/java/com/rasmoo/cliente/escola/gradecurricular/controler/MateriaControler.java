@@ -1,5 +1,6 @@
 package com.rasmoo.cliente.escola.gradecurricular.controler;
 
+import com.rasmoo.cliente.escola.gradecurricular.dto.MateriaDto;
 import com.rasmoo.cliente.escola.gradecurricular.entities.MateriaEntity;
 import com.rasmoo.cliente.escola.gradecurricular.repositories.IMateriaRepository;
 import com.rasmoo.cliente.escola.gradecurricular.service.MateriaService;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,8 +31,8 @@ public class MateriaControler {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> cadastrarMateria(@RequestBody MateriaEntity materia){
-        return ResponseEntity.ok().body(this.materiaService.cadastrar(materia));
+    public ResponseEntity<Boolean> cadastrarMateria(@Valid @RequestBody MateriaDto materia){
+        return ResponseEntity.status(HttpStatus.CREATED).body(this.materiaService.cadastrar(materia));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> deletarMateria(@PathVariable Long id){
@@ -38,7 +40,7 @@ public class MateriaControler {
     }
 
     @PutMapping
-    public ResponseEntity<Boolean> atualizarMateria(@RequestBody MateriaEntity materia){
+    public ResponseEntity<Boolean> atualizarMateria(@Valid @RequestBody MateriaDto materia){
         return ResponseEntity.ok().body(this.materiaService.atualizar(materia));
     }
 
