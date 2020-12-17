@@ -6,7 +6,7 @@ import com.rasmoo.cliente.escola.gradecurricular.entities.MateriaEntity;
 import java.util.List;
 
 public interface IMateriaService {
-    public List<MateriaEntity> listar();
+    public List<MateriaDto> listar();
     public MateriaEntity buscarPorId(Long id);
     public Boolean cadastrar(MateriaDto materia);
     public Boolean atualizar(MateriaDto materia);

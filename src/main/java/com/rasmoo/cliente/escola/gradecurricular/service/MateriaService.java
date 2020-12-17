@@ -1,14 +1,17 @@
 package com.rasmoo.cliente.escola.gradecurricular.service;
 
+import com.rasmoo.cliente.escola.gradecurricular.controler.MateriaControler;
 import com.rasmoo.cliente.escola.gradecurricular.dto.MateriaDto;
 import com.rasmoo.cliente.escola.gradecurricular.entities.MateriaEntity;
 import com.rasmoo.cliente.escola.gradecurricular.exception.MateriaException;
 import com.rasmoo.cliente.escola.gradecurricular.repositories.IMateriaRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +32,17 @@ public class MateriaService implements IMateriaService{
         this.materiaRepository = materiaRepository;
     }
     @Override
-    public List<MateriaEntity> listar() {
+    public List<MateriaDto> listar() {
         try{
-            return this.materiaRepository.findAll();
+            List<MateriaDto> materiaDto = this.mapper.map(this.materiaRepository.findAll(), new TypeToken<List<MateriaDto>>(){
+
+            }.getType());
+            materiaDto.forEach(materia ->{
+                materia.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MateriaControler.class)
+                        .buscarMateria(materia.getId())).withSelfRel());
+            });
+
+            return materiaDto;
         } catch (Exception e) {
             throw new MateriaException(MENSAGEM_ERRO, HttpStatus.INTERNAL_SERVER_ERROR);        }
     }
