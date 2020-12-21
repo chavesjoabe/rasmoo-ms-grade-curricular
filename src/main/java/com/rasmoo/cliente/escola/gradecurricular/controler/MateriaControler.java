@@ -88,5 +88,12 @@ public class MateriaControler {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @GetMapping("/hora-minima/{horaMinima}")
+    public ResponseEntity<Response<List<MateriaEntity>>> listarPorHoraMinima(@PathVariable int horaMinima){
+        Response<List<MateriaEntity>> response = new Response();
+        response.setData(this.materiaService.listarPorHoraMinima(horaMinima));
+        response.setStatusCode(HttpStatus.OK.value());
 
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
