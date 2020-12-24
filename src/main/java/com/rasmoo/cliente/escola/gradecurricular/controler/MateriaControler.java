@@ -96,4 +96,12 @@ public class MateriaControler {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @GetMapping("/frequencia-minima/{frequenciaMinima}")
+    public ResponseEntity<Response<List<MateriaEntity>>> listarPorFrequenciaMinima(@PathVariable int frequenciaMinima){
+        Response<List<MateriaEntity>> response = new Response();
+        response.setData(this.materiaService.listarPorFrequenciaMinima(frequenciaMinima));
+        response.setStatusCode(HttpStatus.OK.value());
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

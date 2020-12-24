@@ -2,6 +2,7 @@ package com.rasmoo.cliente.escola.gradecurricular.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
 @Data
@@ -9,4 +10,9 @@ import org.springframework.hateoas.RepresentationModel;
 public class Response<T> extends RepresentationModel<Response<T>> {
     private int statusCode;
     private T data;
+    private Long timeStamp;
+
+    public Response(){
+        this.timeStamp = System.currentTimeMillis();
+    }
 }

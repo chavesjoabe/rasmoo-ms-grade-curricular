@@ -112,4 +112,13 @@ public class MateriaService implements IMateriaService{
         }
 
     }
+    public  List<MateriaEntity> listarPorFrequenciaMinima(int frequenciaMinima){
+        try{
+            List<MateriaEntity> lista = this.materiaRepository.listarPorFrequenciaMinima(frequenciaMinima);
+
+            return lista;
+        } catch (Exception m) {
+            throw m;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.rasmoo.cliente.escola.gradecurricular.handler;
 
+import com.rasmoo.cliente.escola.gradecurricular.exception.CursoException;
 import com.rasmoo.cliente.escola.gradecurricular.exception.MateriaException;
 import com.rasmoo.cliente.escola.gradecurricular.model.ErrorMapResponse;
 import com.rasmoo.cliente.escola.gradecurricular.model.ErrorResponse;
@@ -19,6 +20,15 @@ public class ResourceHandler {
 
     @ExceptionHandler(MateriaException.class)
     public ResponseEntity<ErrorResponse> handlerMateriaException(MateriaException m){
+        ErrorResponse.ErrorResponseBuilder erro = ErrorResponse.builder();
+        erro.httpStatus(m.getHttpStatus().value());
+        erro.mensagem(m.getMessage());
+        erro.timeStamp(System.currentTimeMillis());
+        return ResponseEntity.status(m.getHttpStatus()).body(erro.build());
+    }
+
+    @ExceptionHandler(CursoException.class)
+    public ResponseEntity<ErrorResponse> handlerCursoException(CursoException m){
         ErrorResponse.ErrorResponseBuilder erro = ErrorResponse.builder();
         erro.httpStatus(m.getHttpStatus().value());
         erro.mensagem(m.getMessage());
